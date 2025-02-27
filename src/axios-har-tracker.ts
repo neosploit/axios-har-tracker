@@ -177,7 +177,7 @@ export class AxiosHarTracker {
     const requestObject: RequestObject = {
       method: config.method && config.method.toUpperCase(),
       url: this.getURL(config),
-      httpVersion: "HTTP/1.1",
+      httpVersion: "",
       cookies,
       headers,
       queryString: this.getParams(config.params),
@@ -240,7 +240,7 @@ export class AxiosHarTracker {
           process.hrtime(response.headers["request-startTime"])[1] / 1000000
         )
         : 0,
-      httpVersion: "HTTP/1.1",
+      httpVersion: `http/${response.request.res.httpVersion}`,
       cookies,
       bodySize: response.data ? JSON.stringify(response.data).length : 0,
       redirectURL: "",
@@ -276,6 +276,7 @@ export class AxiosHarTracker {
     const newEntry = this.generateNewEntry();
     newEntry.request = this.returnRequestObject(response.config);
     newEntry.response = this.returnResponseObject(response);
+    newEntry.request.httpVersion = newEntry.response.httpVersion;
     this.generatedHar.log.entries.push(newEntry);
   }
 
