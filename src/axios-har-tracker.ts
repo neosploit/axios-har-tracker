@@ -312,7 +312,7 @@ export class AxiosHarTracker {
 
   private transformObjectToArray(obj, encode: boolean) {
     const results = Object.keys(obj).map((key) => {
-      let value = obj[key];
+      let value = obj[key] ?? '';
       return {
         name: key,
         value: encode ? qs.stringify(value) || value : this.checkObj(value),
