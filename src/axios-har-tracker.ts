@@ -175,7 +175,7 @@ export class AxiosHarTracker {
     }
 
     const requestObject: RequestObject = {
-      method: config.method,
+      method: config.method && config.method.toUpperCase(),
       url: this.getURL(config),
       httpVersion: "HTTP/1.1",
       cookies,
